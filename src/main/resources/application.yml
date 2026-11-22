@@ -1,0 +1,120 @@
+server:
+  port: ${PORT:8080}
+
+gossip:
+  news:
+    # Shared cache and freshness settings for all feeds and API providers.
+    cache-ttl: PT15M
+    max-article-age: P14D
+    gdelt-enabled: true
+    gdelt-endpoint: https://api.gdeltproject.org/api/v2/doc/doc
+
+    # API providers are opt-in; secrets are supplied only through environment variables.
+    news-api-enabled: ${NEWS_API_ENABLED:false}
+    news-api-key: ${NEWS_API_KEY:}
+    guardian-api-key: ${GUARDIAN_API_KEY:}
+    ny-times-api-key: ${NYT_API_KEY:}
+    translator-endpoint: ${AZURE_TRANSLATOR_ENDPOINT:https://api.cognitive.microsofttranslator.com/translate}
+    translator-key: ${AZURE_TRANSLATOR_KEY:}
+    translator-region: ${AZURE_TRANSLATOR_REGION:}
+
+    # India publisher feeds. TOI's published terms prohibit hosted aggregation without
+    # permission, so its domain is discovered through GDELT instead of polling its RSS.
+    india-feeds:
+      - publisher: NDTV
+        url: https://feeds.feedburner.com/ndtvnews-top-stories
+        source-country: India
+        language: en
+      - publisher: The Indian Express
+        url: https://indianexpress.com/section/india/feed/
+        source-country: India
+        language: en
+      - publisher: Hindustan Times
+        url: https://www.hindustantimes.com/feeds/rss/india-news/rssfeed.xml
+        source-country: India
+        language: en
+      - publisher: Times of India
+        url: https://timesofindia.indiatimes.com/rssfeedstopstories.cms
+        source-country: India
+        enabled: false
+        language: en
+
+    # Direct U.S. feeds; AP, Washington Post, NBC, CNN and WSJ are in the GDELT
+    # publisher-domain registry because an open, current feed/API was not confirmed.
+    us-feeds:
+      - publisher: NPR
+        url: https://feeds.npr.org/1001/rss.xml
+        source-country: United States
+        language: en
+      - publisher: ABC News
+        url: https://feeds.abcnews.com/abcnews/topstories
+        source-country: United States
+        language: en
+      - publisher: CBS News
+        url: https://www.cbsnews.com/latest/rss/main
+        source-country: United States
+        language: en
+      - publisher: Fox News
+        url: https://moxie.foxnews.com/google-publisher/latest.xml
+        source-country: United States
+        language: en
+      - publisher: The New York Times
+        url: https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml
+        source-country: United States
+        language: en
+
+    # China feeds with publisher-owned RSS pages/links. ECNS is discovery-only until
+    # its current feed URL and reuse terms are confirmed.
+    china-feeds:
+      - publisher: Xinhua
+        url: https://www.xinhuanet.com/english/rss/worldrss.xml
+        source-country: China
+        language: en
+      - publisher: Xinhua
+        url: https://www.xinhuanet.com/english/rss/chinarss.xml
+        source-country: China
+        language: en
+      - publisher: CGTN
+        url: https://www.cgtn.com/subscribe/rss/section/china.xml
+        source-country: China
+        language: en
+      - publisher: CGTN
+        url: https://www.cgtn.com/subscribe/rss/section/world.xml
+        source-country: China
+        language: en
+      - publisher: China News Service / ECNS
+        url: https://www.ecns.cn/rss/rss.xml
+        source-country: China
+        enabled: false
+        language: en
+
+    # International public feeds. Reuters is discovered by GDELT; direct access is licensed.
+    world-feeds:
+      - publisher: BBC News
+        url: https://feeds.bbci.co.uk/news/rss.xml
+        source-country: United Kingdom
+        language: en
+      - publisher: The Guardian
+        url: https://www.theguardian.com/world/rss
+        source-country: United Kingdom
+        language: en
+      - publisher: Al Jazeera
+        url: https://www.aljazeera.com/xml/rss/all.xml
+        source-country: Qatar
+        language: en
+      - publisher: Deutsche Welle
+        url: https://rss.dw.com/xml/rss-en-all
+        source-country: Germany
+        language: en
+      - publisher: France 24
+        url: https://www.france24.com/en/rss
+        source-country: France
+        language: en
+      - publisher: Euronews
+        url: https://www.euronews.com/rss
+        source-country: Europe
+        language: en
+      - publisher: Sky News
+        url: https://feeds.skynews.com/feeds/rss/home.xml
+        source-country: United Kingdom
+        language: en
