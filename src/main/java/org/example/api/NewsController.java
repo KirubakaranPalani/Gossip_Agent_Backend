@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin(origins = {
         "https://gossip-agent.kirubakaran275p.workers.dev",
+        "https://localhost",
         "http://localhost:5173",
+        "https://gossip-agent-backend.onrender.com",
         "http://localhost:4173"
 })
 public class NewsController {
